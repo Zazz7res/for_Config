@@ -1,8 +1,0 @@
-# 只保留这两段（删除所有其他 snippet）
-snippet pd "debug int"
-printf("${1:var} = %d\\n", ${1:var});${0}
-endsnippet
-
-snippet ps "debug string"
-printf("${1:var} = %s\\n", ${1:var});${0}
-endsnippet
