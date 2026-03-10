@@ -1,7 +1,0 @@
-(
-  echo "======================================== File: ~/.config/fcitx5/profile ========================================" && cat ~/.config/fcitx5/profile
-  echo -e "\n\n"
-  echo "======================================== File: ~/.config/fcitx5/conf/pinyin.conf ========================================" && cat ~/.config/fcitx5/conf/pinyin.conf
-  echo -e "\n\n"
-  echo "======================================== File: ~/.config/fcitx5/conf/classicui.conf ========================================" && cat ~/.config/fcitx5/conf/classicui.conf
-) > ~/fcitx5_full_config_export.txt
