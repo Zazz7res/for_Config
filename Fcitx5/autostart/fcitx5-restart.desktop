@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Fcitx5 Restart for Wayland Browser Fix
+Exec=/home/mini-harry/.local/bin/fcitx5-restart-delay.sh
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Comment=Restart fcitx5 to fix Wayland browser input method connection
