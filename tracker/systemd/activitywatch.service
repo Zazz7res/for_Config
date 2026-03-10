@@ -1,0 +1,12 @@
+[Unit]
+Description=ActivityWatch Server
+After=graphical-session.target
+Wants=graphical-session.target
+
+[Service]
+ExecStart=HOME_PLACEHOLDER/opt/activitywatch/activitywatch/aw-server/aw-server --host localhost --port 5600
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target
