@@ -1,7 +1,12 @@
 " ============================================================================
 " Vim Modern IDE Configuration (C/C++ Focused)
 " Philosophy: Fast, Clean, Uncoupled, No Conflicts
-" ============================================================================
+" ===== Kitty 终端兼容修复 =====
+if $TERM == 'xterm-kitty'
+  let &t_RV = ""   " 禁止 Vim 发送终端版本查询 (根本原因)
+  let &t_RK = ""   " 禁止 Vim 查询终端名称
+  let &t_ut = ""   " 禁用背景色擦除 (防止背景色异常)
+endif" ============================================================================
 
 " ----------------------------
 " 1. 核心与编码 (Core Environment)
@@ -28,9 +33,6 @@ set matchtime=1
 set ruler
 set laststatus=2
 set termguicolors
-set background=dark
-colorscheme desert
-
 " ----------------------------
 " 3. 鼠标与剪贴板 (Mouse & Clipboard)
 " ----------------------------
@@ -95,6 +97,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ryanoasis/vim-devicons' 
+Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 
 " 核心引擎
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -115,9 +118,11 @@ Plug 'tpope/vim-fugitive'
 call plug#end()
 
 " --- Airline 设置 ---
-let g:airline_theme='powerlineish'
+set background=dark
+colorscheme catppuccin_mocha
+let g:airline_theme='catppuccin_mocha'
 let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
 
 " --- Coc 自动安装扩展 (加入 coc-pairs 完美替代 auto-pairs) ---
 let g:coc_global_extensions = [
@@ -216,3 +221,75 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
+
+
+" 新建标签
+nnoremap <leader>t :tabnew<CR>
+" 关闭当前标签
+nnoremap <leader>x :tabclose<CR>
+
+" ----------------------------
+" 彩色 Tab 标签（带序号）专业配色版
+" ----------------------------
+function! MyTabLine()
+  let s = ''
+  let colors = ['TabColor1','TabColor2','TabColor3','TabColor4','TabColor5']
+
+  for i in range(tabpagenr('$'))
+    let tabnr    = i + 1
+    let winnr    = tabpagewinnr(tabnr)
+    let bufnr    = tabpagebuflist(tabnr)[winnr - 1]
+    let bufname  = fnamemodify(bufname(bufnr), ':t')
+    let bufname  = empty(bufname) ? '[No Name]' : bufname
+    let modified = getbufvar(bufnr, '&modified') ? ' ●' : ''
+
+    if tabnr == tabpagenr()
+      let s .= '%#TabLineSel#'
+    else
+      let s .= '%#' . colors[(i) % len(colors)] . '#'
+    endif
+
+    let s .= ' ' . tabnr . ': ' . bufname . modified . ' '
+  endfor
+
+  let s .= '%#TabLineFill#'
+  return s
+endfunction
+
+function! SetTabColors()
+  " 深玫瑰  —— 深底 + 亮玫瑰字
+  hi TabColor1 guibg=#4A2540 guifg=#F38BA8 gui=bold
+  " 琥珀金  —— 深底 + 暖金字
+  hi TabColor2 guibg=#3D3218 guifg=#F9E2AF gui=bold
+  " 翡翠绿  —— 深底 + 清绿字
+  hi TabColor3 guibg=#1B3A2F guifg=#A6E3A1 gui=bold
+  " 深海蓝  —— 深底 + 冰蓝字
+  hi TabColor4 guibg=#1A2D4A guifg=#89B4FA gui=bold
+  " 暗紫    —— 深底 + 薰衣草字
+  hi TabColor5 guibg=#2C1F4A guifg=#CBA6F7 gui=bold
+  " 当前激活：亮底深字，突出显示
+  hi TabLineSel  guibg=#CDD6F4 guifg=#1E1E2E gui=bold
+  " 空白填充区
+  hi TabLineFill guibg=#181825 guifg=#181825
+endfunction
+
+call SetTabColors()
+autocmd ColorScheme * call SetTabColors()
+
+set tabline=%!MyTabLine()
+set showtabline=2
+
+nnoremap <leader>1 1gt
+nnoremap <leader>2 2gt
+nnoremap <leader>3 3gt
+nnoremap <leader>4 4gt
+nnoremap <leader>5 5gt
+nnoremap <leader>6 6gt
+nnoremap <leader>7 7gt
+nnoremap <leader>8 8gt
+nnoremap <leader>9 9gt
+
+
+
+
+
