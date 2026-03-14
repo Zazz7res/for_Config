@@ -123,6 +123,8 @@ colorscheme catppuccin_mocha
 let g:airline_theme='catppuccin_mocha'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 0
+let g:airline_highlighting_cache = 1
+let g:airline_skip_empty_sections = 1
 
 " --- Coc 自动安装扩展 (加入 coc-pairs 完美替代 auto-pairs) ---
 let g:coc_global_extensions = [
