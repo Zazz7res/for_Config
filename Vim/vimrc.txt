@@ -232,6 +232,9 @@ nnoremap <leader>t :tabnew<CR>
 " 关闭当前标签
 nnoremap <leader>x :tabclose<CR>
 
+" 重启coc-clangd  代码识别
+nnoremap <leader>cr :CocRestart<CR>
+
 " ----------------------------
 " 彩色 Tab 标签（带序号）专业配色版
 " ----------------------------
