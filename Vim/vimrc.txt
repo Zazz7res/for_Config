@@ -232,8 +232,8 @@ nnoremap <leader>t :tabnew<CR>
 " 关闭当前标签
 nnoremap <leader>x :tabclose<CR>
 
-" 重启coc-clangd  代码识别
-nnoremap <leader>cr :CocRestart<CR>
+" 定义一个快捷键（例如 Ctrl+c 然后 Ctrl+r）来重启 clangd
+nnoremap <leader>cr :!pkill clangd<CR>:CocCommand clangd.restart<CR>
 
 " ----------------------------
 " 彩色 Tab 标签（带序号）专业配色版
